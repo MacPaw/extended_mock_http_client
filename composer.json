@@ -1,0 +1,16 @@
+{
+    "name": "alekseytupichenkov/extended_mock_http_client",
+    "description": "Extended Mock Http Client",
+    "type": "library",
+    "require": {
+        "php": "^7.1",
+        "symfony/http-client": "^5.1"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Aleksey Tupichenkov",
+            "email": "alekseytupichenkov@gmail.com"
+        }
+    ]
+}
