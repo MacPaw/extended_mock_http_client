@@ -6,6 +6,11 @@
         "php": "^7.1",
         "symfony/http-client": "^5.1"
     },
+    "autoload": {
+        "psr-4": {
+            "ExtendedMockHttpClient\\": "src"
+        }
+    },
     "license": "MIT",
     "authors": [
         {
