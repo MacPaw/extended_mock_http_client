@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Tests\ExtendedMockHttpClient;
+namespace ExtendedMockHttpClient;
 
 use Exception;
+use ExtendedMockHttpClient\Collection\FixtureCollection;
+use ExtendedMockHttpClient\Model\HttpFixture;
 use Iterator;
 use Symfony\Component\HttpClient\HttpClientTrait;
 use Symfony\Component\HttpClient\Response\MockResponse;

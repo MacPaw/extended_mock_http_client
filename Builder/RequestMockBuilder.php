@@ -2,9 +2,9 @@
 
 namespace ExtendedMockHttpClient\Builder;
 
-use App\Tests\ExtendedMockHttpClient\RequestMock;
 use ExtendedMockHttpClient\Comparators\ComparatorInterface;
 use ExtendedMockHttpClient\Comparators\StringEquals;
+use ExtendedMockHttpClient\Model\RequestMock;
 
 class RequestMockBuilder
 {

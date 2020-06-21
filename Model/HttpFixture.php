@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\ExtendedMockHttpClient;
+namespace ExtendedMockHttpClient\Model;
 
 use Symfony\Contracts\HttpClient\ResponseInterface;
 

@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Tests\ExtendedMockHttpClient;
+namespace ExtendedMockHttpClient\Collection;
+
+use ExtendedMockHttpClient\Model\HttpFixture;
 
 class FixtureCollection
 {
