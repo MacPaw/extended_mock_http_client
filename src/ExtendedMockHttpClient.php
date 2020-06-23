@@ -49,7 +49,7 @@ class ExtendedMockHttpClient implements HttpClientInterface
         $this->baseUri = $baseUri;
     }
 
-    public function addFixture($fixture)
+    public function addFixture(HttpFixture $fixture)
     {
         $this->fixtureCollection->addFixture($fixture);
     }

@@ -7,20 +7,18 @@ use ExtendedMockHttpClient\Comparators\ComparatorInterface;
 
 class RequestMock
 {
-    /**
-     * @var ComparatorInterface[]
-     */
+    /** @var ComparatorInterface[] */
     private $methodComparators;
-
-    /**
-     * @var ComparatorInterface[]
-     */
+    /** @var ComparatorInterface[] */
     private $urlComparators;
+    /** @var ComparatorInterface[] */
+    private $queryComparators;
 
     public function __construct(RequestMockBuilder $builder)
     {
         $this->methodComparators = $builder->getMethodComparators();
         $this->urlComparators = $builder->getUrlComparators();
+        $this->queryComparators = $builder->getQueryComparators();
     }
 
     public function isSuitable(string $method, string $url): bool
@@ -32,6 +30,12 @@ class RequestMock
         }
 
         foreach ($this->urlComparators as $comparator) {
+            if (!$comparator->isMatch($url)) {
+                return false;
+            }
+        }
+
+        foreach ($this->queryComparators as $comparator) {
             if (!$comparator->isMatch($url)) {
                 return false;
             }

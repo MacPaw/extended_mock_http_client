@@ -1,5 +1,10 @@
 # ExtendedMockHttpClient
 
+### Install
+```shell script
+composer require alekseytupichenkov/extended_mock_http_client
+```
+
 ### How to use
 In config file `config/services_test.yaml` replace current HTTP client service
 ```yaml
@@ -11,10 +16,10 @@ services:
         autowire: true
         autoconfigure: true
         public: true
-    test.http-client-service-name:
-        class: App\Tests\ExtendedMockHttpClient\ExtendedMockHttpClient
+    http_client_service_name:
+        class: ExtendedMockHttpClient\ExtendedMockHttpClient
         arguments:
-            - 'http://foo.bar/api'
+            - 'https://foo.bar'
 ```
 
 And then in PHPUnit test do something like this
@@ -57,3 +62,4 @@ class MyTest extends KernelTestCase
     * Json body comparator
 * More docs and examples
 * Write Symfony bundle possibility to add custom comparators through DI
+* Add possibility create response based on request data
