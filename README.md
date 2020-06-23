@@ -2,7 +2,7 @@
 
 ### Install
 ```shell script
-composer require alekseytupichenkov/extended_mock_http_client
+composer require macpaw/extended_mock_http_client
 ```
 
 ### How to use
