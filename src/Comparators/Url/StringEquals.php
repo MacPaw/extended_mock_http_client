@@ -12,4 +12,11 @@ class StringEquals extends BaseStringEquals
 
         parent::__construct($url);
     }
+
+    public function isMatch($url): bool
+    {
+        [$url] = explode('?', $url);
+
+        return parent::isMatch($url);
+    }
 }
