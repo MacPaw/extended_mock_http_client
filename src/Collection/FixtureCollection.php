@@ -23,10 +23,10 @@ class FixtureCollection
         $this->fixtures[] = $fixture;
     }
 
-    public function findSuitableFixture(string $method, string $url): ?HttpFixture
+    public function findSuitableFixture(string $method, string $url, string $body): ?HttpFixture
     {
         foreach ($this->fixtures as $fixture) {
-            if ($fixture->isSuitable($method, $url)) {
+            if ($fixture->isSuitable($method, $url, $body)) {
                 return $fixture;
             }
         }

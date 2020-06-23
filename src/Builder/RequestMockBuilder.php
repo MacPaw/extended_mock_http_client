@@ -16,6 +16,8 @@ class RequestMockBuilder
     private $urlComparators = [];
     /** @var ComparatorInterface[] */
     private $queryComparators = [];
+    /** @var ComparatorInterface[] */
+    private $bodyComparators = [];
 
     public function methodEquals(string $method): self
     {
@@ -34,6 +36,13 @@ class RequestMockBuilder
     public function queryShouldContain(string $fieldName, string $value): self
     {
         $this->queryComparators[] = new QueryShouldContain($fieldName, $value);
+
+        return $this;
+    }
+
+    public function bodyEquals(string $body): self
+    {
+        $this->bodyComparators[] = new StringEquals($body);
 
         return $this;
     }
@@ -60,6 +69,14 @@ class RequestMockBuilder
     public function getQueryComparators(): array
     {
         return $this->queryComparators;
+    }
+
+    /**
+     * @return ComparatorInterface[]
+     */
+    public function getBodyComparators(): array
+    {
+        return $this->bodyComparators;
     }
 
     public function build(): RequestMock

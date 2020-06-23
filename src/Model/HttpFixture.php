@@ -22,9 +22,9 @@ class HttpFixture
         $this->response = $response;
     }
 
-    public function isSuitable(string $method, string $url): bool
+    public function isSuitable(string $method, string $url, string $body): bool
     {
-        return $this->request->isSuitable($method, $url);
+        return $this->request->isSuitable($method, $url, $body);
     }
 
     public function getResponse(): ResponseInterface

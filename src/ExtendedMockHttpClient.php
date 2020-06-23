@@ -60,7 +60,7 @@ class ExtendedMockHttpClient implements HttpClientInterface
         $url = implode('', $request[0]);
         $options = $request[1];
 
-        $fixture = $this->fixtureCollection->findSuitableFixture($method, $url);
+        $fixture = $this->fixtureCollection->findSuitableFixture($method, $url, $options['body']);
 
         if ($fixture === null) {
             throw new Exception('Not found suitable fixture');
@@ -73,7 +73,6 @@ class ExtendedMockHttpClient implements HttpClientInterface
     {
         if ($responses instanceof ResponseInterface) {
             $responses = [$responses];
-            ;
         } elseif (!is_iterable($responses)) {
             throw new TypeError(sprintf('"%s()" expects parameter 1 to be an iterable of MockResponse objects, "%s" given.', __METHOD__, get_debug_type($responses)));
         }
