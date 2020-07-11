@@ -2,8 +2,8 @@
 
 namespace ExtendedMockHttpClient;
 
-use Exception;
 use ExtendedMockHttpClient\Collection\FixtureCollection;
+use ExtendedMockHttpClient\Comparators\NotFountSuitableFixtureException;
 use ExtendedMockHttpClient\Model\HttpFixture;
 use Iterator;
 use Symfony\Component\HttpClient\HttpClientTrait;
@@ -49,7 +49,7 @@ class ExtendedMockHttpClient implements HttpClientInterface
         $this->baseUri = $baseUri;
     }
 
-    public function addFixture(HttpFixture $fixture)
+    public function addFixture(HttpFixture $fixture): void
     {
         $this->fixtureCollection->addFixture($fixture);
     }
@@ -63,7 +63,7 @@ class ExtendedMockHttpClient implements HttpClientInterface
         $fixture = $this->fixtureCollection->findSuitableFixture($method, $url, $options['body']);
 
         if ($fixture === null) {
-            throw new Exception('Not found suitable fixture');
+            throw NotFountSuitableFixtureException::fromRequestParameters($method, $url, $options);
         }
 
         return MockResponse::fromRequest($method, $url, $options, $fixture->getResponse());
