@@ -1,6 +1,6 @@
 <?php
 
-namespace ExtendedMockHttpClient\Comparators;
+namespace ExtendedMockHttpClient\Excpetion;
 
 class NotFountSuitableFixtureException extends ExtendedMockHttpClientException
 {

@@ -3,7 +3,7 @@
 namespace ExtendedMockHttpClient;
 
 use ExtendedMockHttpClient\Collection\FixtureCollection;
-use ExtendedMockHttpClient\Comparators\NotFountSuitableFixtureException;
+use ExtendedMockHttpClient\Excpetion\NotFountSuitableFixtureException;
 use ExtendedMockHttpClient\Model\HttpFixture;
 use Iterator;
 use Symfony\Component\HttpClient\HttpClientTrait;
