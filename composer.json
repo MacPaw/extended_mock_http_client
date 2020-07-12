@@ -20,15 +20,22 @@
         "phpstan": "./vendor/bin/phpstan analyse",
         "code-style": "./vendor/bin/phpcs",
         "code-style-fix": "./vendor/bin/phpcbf",
+        "phpunit": "./vendor/bin/phpunit",
         "dev-checks": [
             "composer validate",
             "@phpstan",
-            "@code-style"
+            "@code-style",
+            "@phpunit"
         ]
     },
     "autoload": {
         "psr-4": {
             "ExtendedMockHttpClient\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ExtendedMockHttpClient\\Tests\\": "tests/"
         }
     },
     "license": "MIT",

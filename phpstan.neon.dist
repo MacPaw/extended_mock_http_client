@@ -1,5 +1,8 @@
 parameters:
     paths:
         - src
+        - tests
     level: 5
     treatPhpDocTypesAsCertain: false
+    ignoreErrors:
+        - '#Dynamic call to static method PHPUnit\\Framework\\.*#'

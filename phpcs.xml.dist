@@ -35,4 +35,5 @@
     <rule ref="Generic.Arrays.DisallowLongArraySyntax.Found"></rule>
 
     <file>src/</file>
+    <file>tests/</file>
 </ruleset>

@@ -1,5 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
+namespace ExtendedMockHttpClient\Tests\Functional;
+
 use ExtendedMockHttpClient\Builder\RequestMockBuilder;
 use ExtendedMockHttpClient\ExtendedMockHttpClient;
 use ExtendedMockHttpClient\Model\HttpFixture;
@@ -8,7 +12,7 @@ use Symfony\Component\HttpClient\Response\MockResponse;
 
 class ExtendedMockHttpClientBaseTest extends TestCase
 {
-    public function simpleSuccessTest(): void
+    public function testSuccessWithoutAnyRequestComparators(): void
     {
         $client = new ExtendedMockHttpClient('http://test.test');
         $client->addFixture(new HttpFixture(
