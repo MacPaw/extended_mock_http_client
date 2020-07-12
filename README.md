@@ -37,7 +37,7 @@ class MyTest extends KernelTestCase
                 ->build(),
             new MockResponse('response body', [
                 'http_code' => 200
-             ])
+            ])
         ));
     }
 }
