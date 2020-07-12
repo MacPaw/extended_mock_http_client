@@ -1,10 +1,25 @@
 {
     "name": "macpaw/extended_mock_http_client",
-    "description": "Extended Mock Http Client",
+    "description": "This repository provides mocks for Symfony HTTP Client, it more flexible than default Symfony mock",
+    "keywords": ["symfony/http-client", "mock", "testing", "fixtures"],
     "type": "library",
     "require": {
         "php": "^7.1",
         "symfony/http-client": "^5.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.3",
+        "phpstan/extension-installer": "^1.0",
+        "phpstan/phpstan": "^0.12",
+        "phpstan/phpstan-deprecation-rules": "^0.12",
+        "phpstan/phpstan-phpunit": "^0.12",
+        "phpstan/phpstan-strict-rules": "^0.12"
+    },
+    "scripts": {
+        "dev-checks": [
+            "composer validate",
+            "./vendor/bin/phpstan analyse"
+        ]
     },
     "autoload": {
         "psr-4": {
@@ -17,8 +32,5 @@
             "name": "Aleksey Tupichenkov",
             "email": "alekseytupichenkov@gmail.com"
         }
-    ],
-    "require-dev": {
-        "phpunit/phpunit": "^8.3"
-    }
+    ]
 }
