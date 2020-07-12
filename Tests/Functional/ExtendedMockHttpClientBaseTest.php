@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ExtendedMockHttpClient\Tests\Functional;
 
 use ExtendedMockHttpClient\Builder\RequestMockBuilder;
+use ExtendedMockHttpClient\Excpetion\NotFountSuitableFixtureException;
 use ExtendedMockHttpClient\ExtendedMockHttpClient;
 use ExtendedMockHttpClient\Model\HttpFixture;
 use PHPUnit\Framework\TestCase;
@@ -23,7 +24,25 @@ class ExtendedMockHttpClientBaseTest extends TestCase
         ));
 
         $response = $client->request('GET', 'http://test.test/foo/bar');
+
         $this->assertSame(200, $response->getStatusCode());
         $this->assertSame('response body', $response->getContent(false));
+    }
+
+    public function testErrorNotFountSuitableFixtureException(): void
+    {
+        $client = new ExtendedMockHttpClient('http://test.test');
+        $client->addFixture(new HttpFixture(
+            (new RequestMockBuilder())
+                ->methodEquals('POST')
+                ->build(),
+            new MockResponse('response body', [
+                'http_code' => 200
+            ])
+        ));
+
+        $this->expectException(NotFountSuitableFixtureException::class);
+
+        $client->request('GET', 'http://test.test/foo/bar');
     }
 }

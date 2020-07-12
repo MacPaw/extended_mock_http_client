@@ -11,7 +11,7 @@ class NotFountSuitableFixtureException extends ExtendedMockHttpClientParameteriz
         return new self('Not found suitable fixture', [
             'method' => $method,
             'url' => $url,
-            'body' => $options['body'],
+            'body' => $options['body'] ?? null,
         ], 500);
     }
 }
