@@ -41,7 +41,19 @@ class MyTest extends KernelTestCase
         ));
     }
 }
-``` 
+```
+
+### Setup readable ExtendedMockHttpClient errors
+Need to update your `phpunit.xml` file as follows
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    ...
+    printerClass="ExtendedMockHttpClient\PHPUnit\Printer\ExtendedMockHttpClientParameterizedExceptionResultPrinter"
+>
+    // ....
+</phpunit>
+```
 
 ### Todo list
 * Add checkers, write tests, etc
