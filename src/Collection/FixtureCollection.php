@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ExtendedMockHttpClient\Collection;
 
 use ExtendedMockHttpClient\Model\HttpFixture;

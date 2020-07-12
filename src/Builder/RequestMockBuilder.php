@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ExtendedMockHttpClient\Builder;
 
 use ExtendedMockHttpClient\Comparators\ComparatorInterface;

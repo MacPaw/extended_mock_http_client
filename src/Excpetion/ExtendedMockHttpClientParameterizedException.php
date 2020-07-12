@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ExtendedMockHttpClient\Excpetion;
 
 use Throwable;
 
-class ExtendedMockHttpClientParameterizedException extends AbstractExtendedMockHttpClientException implements ExtendedMockHttpClientParameterizedExceptionInterface
+class ExtendedMockHttpClientParameterizedException extends AbstractExtendedMockHttpClientException
 {
     private $parameters;
 

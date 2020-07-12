@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ExtendedMockHttpClient\Model;
 
 use ExtendedMockHttpClient\Builder\RequestMockBuilder;

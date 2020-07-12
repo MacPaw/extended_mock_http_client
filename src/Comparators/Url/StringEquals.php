@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ExtendedMockHttpClient\Comparators\Url;
 
 use ExtendedMockHttpClient\Comparators\StringEquals as BaseStringEquals;
