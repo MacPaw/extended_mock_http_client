@@ -61,8 +61,9 @@ class ExtendedMockHttpClient implements HttpClientInterface
         $request = self::prepareRequest($method, $url, $options, ['base_uri' => $this->baseUri], true);
         $url = implode('', $request[0]);
         $options = $request[1];
+        $body = isset($options['body']) ? $options['body'] : '';
 
-        $fixture = $this->fixtureCollection->findSuitableFixture($method, $url, $options['body']);
+        $fixture = $this->fixtureCollection->findSuitableFixture($method, $url, $body);
 
         if ($fixture === null) {
             throw NotFountSuitableFixtureException::fromRequestParameters($method, $url, $options);
