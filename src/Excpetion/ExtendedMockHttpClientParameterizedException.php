@@ -2,10 +2,9 @@
 
 namespace ExtendedMockHttpClient\Excpetion;
 
-use Exception;
 use Throwable;
 
-class ExtendedMockHttpClientParameterizedException extends Exception
+class ExtendedMockHttpClientParameterizedException extends AbstractExtendedMockHttpClientException implements ExtendedMockHttpClientParameterizedExceptionInterface
 {
     private $parameters;
 
