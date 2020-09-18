@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace ExtendedMockHttpClient\Collection;
 
 use ExtendedMockHttpClient\Model\HttpFixture;
+use Symfony\Component\Cache\ResettableInterface;
 
-class FixtureCollection
+class FixtureCollection implements ResettableInterface
 {
     /**
      * @var HttpFixture[]
@@ -34,5 +35,10 @@ class FixtureCollection
         }
 
         return null;
+    }
+
+    public function reset(): void
+    {
+        $this->fixtures = [];
     }
 }
