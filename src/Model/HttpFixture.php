@@ -18,6 +18,11 @@ class HttpFixture
      */
     private $response;
 
+    /**
+     * @var int
+     */
+    private $calledTimes = 0;
+
     public function __construct(RequestMock $request, ResponseInterface $response)
     {
         $this->request = $request;
@@ -26,11 +31,22 @@ class HttpFixture
 
     public function isSuitable(string $method, string $url, string $body): bool
     {
-        return $this->request->isSuitable($method, $url, $body);
+        $isSuitable = $this->request->isSuitable($method, $url, $body);
+
+        if ($isSuitable) {
+            ++$this->calledTimes;
+        }
+
+        return $isSuitable;
     }
 
     public function getResponse(): ResponseInterface
     {
         return $this->response;
+    }
+
+    public function getCalledTimes(): int
+    {
+        return $this->calledTimes;
     }
 }
