@@ -87,6 +87,11 @@ class ExtendedMockHttpClient implements HttpClientInterface, ResettableInterface
 
         return new ResponseStream(MockResponse::stream($responses, $timeout));
     }
+
+    public function getBaseUri(): string
+    {
+        return $this->baseUri;
+    }
     
     public function reset(): void
     {
