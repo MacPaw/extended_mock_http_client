@@ -1,5 +1,6 @@
 /vendor/
 /.phpcs-cache
+/.idea
 /phpcs.xml
 /phpstan.neon
 /.phpunit.result.cache
