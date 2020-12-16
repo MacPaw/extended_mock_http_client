@@ -15,7 +15,8 @@
         "phpstan/phpstan-deprecation-rules": "^0.12",
         "phpstan/phpstan-phpunit": "^0.12",
         "phpstan/phpstan-strict-rules": "^0.12",
-        "squizlabs/php_codesniffer": "^3.5"
+        "squizlabs/php_codesniffer": "^3.5",
+        "maglnet/composer-require-checker": "^2.1"
     },
     "scripts": {
         "phpstan": "./vendor/bin/phpstan analyse",
@@ -26,12 +27,14 @@
             "composer validate",
             "@phpstan",
             "@code-style",
-            "@phpunit"
+            "@phpunit",
+            "vendor/bin/composer-require-checker check"
         ],
         "ci-checks": [
           "composer validate --strict > ./reports/composer-validate.txt 2>&1 || true",
           "vendor/bin/phpcs --report=xml --report-file=./reports/phpcs.xml || true",
           "vendor/bin/phpunit --log-junit ./reports/phpunit.xml --cache-result-file=./reports/ || true",
+          "vendor/bin/composer-require-checker check || true",
           "php -d memory_limit=-1 ./vendor/bin/phpstan --error-format=checkstyle analyse -l 4 -c phpstan.neon.dist > ./reports/phpstan.xml || true"
         ]
     },
