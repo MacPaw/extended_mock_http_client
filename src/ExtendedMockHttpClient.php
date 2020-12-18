@@ -92,7 +92,7 @@ class ExtendedMockHttpClient implements HttpClientInterface, ResettableInterface
     {
         return $this->baseUri;
     }
-    
+
     public function reset(): void
     {
         $this->fixtureCollection->reset();
