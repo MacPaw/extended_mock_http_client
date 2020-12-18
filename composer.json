@@ -27,6 +27,12 @@
             "@phpstan",
             "@code-style",
             "@phpunit"
+        ],
+        "ci-checks": [
+          "composer validate --strict > ./reports/composer-validate.txt 2>&1 || true",
+          "vendor/bin/phpcs --report=xml --report-file=./reports/phpcs.xml || true",
+          "vendor/bin/phpunit --log-junit ./reports/phpunit.xml --cache-result-file=./reports/ || true",
+          "php -d memory_limit=-1 ./vendor/bin/phpstan --error-format=checkstyle analyse -l 4 -c phpstan.neon.dist > ./reports/phpstan.xml || true"
         ]
     },
     "autoload": {
