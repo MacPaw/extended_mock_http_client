@@ -40,9 +40,6 @@ stages:
               7.2:
                 scope: 7.2
                 dockerTag: $(Build.SourceBranchName)-$(Build.BuildNumber)-7.2
-              7.1:
-                scope: 7.1
-                dockerTag: $(Build.SourceBranchName)-$(Build.BuildNumber)-7.1
           name: extendMockHTTPClient
           projectGCR: $(project)/$(component)
           image: extend-mock-http-client
