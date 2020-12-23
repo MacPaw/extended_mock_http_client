@@ -1,15 +1,15 @@
 {
     "name": "macpaw/extended_mock_http_client",
     "description": "This repository provides mocks for Symfony HTTP Client, it more flexible than default Symfony mock",
-    "keywords": ["symfony/http-client", "mock", "testing", "fixtures", "symfony", "behat", "development"],
+    "keywords": ["http-client", "mock", "testing", "fixtures", "symfony", "development"],
     "type": "library",
     "require": {
-        "php": "^7.1",
-        "symfony/http-client": "^5.1",
-        "symfony/cache": "^5.1"
+        "php": ">=7.2",
+        "symfony/http-client": "^4.4 || ^5.0",
+        "symfony/cache": "^4.4 || ^5.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^8.3",
+        "phpunit/phpunit": "^8.5",
         "phpstan/extension-installer": "^1.0",
         "phpstan/phpstan": "^0.12",
         "phpstan/phpstan-deprecation-rules": "^0.12",
@@ -52,7 +52,15 @@
     "authors": [
         {
             "name": "Aleksey Tupichenkov",
-            "email": "alekseytupichenkov@gmail.com"
+            "email": "alekseytupichenkov@gmail.com",
+            "homepage": "https://github.com/alekseytupichenkov",
+            "role": "Author"
+        },
+        {
+            "name": "Yozhef Hisem",
+            "email": "hisemjo@gmail.com",
+            "homepage": "https://github.com/Yozhef",
+            "role": "Contributor"
         }
     ]
 }
