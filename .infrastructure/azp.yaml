@@ -12,7 +12,7 @@ resources:
       endpoint: MacPaw
 
 variables:
-  - group: composer
+  - group: github
   - name: project
     value: macpaw
   - name: component
@@ -41,6 +41,7 @@ stages:
                 scope: 7.2
                 dockerTag: $(Build.SourceBranchName)-$(Build.BuildNumber)-7.2
           name: extendMockHTTPClient
+          containerRegistry: gcr
           projectGCR: $(project)/$(component)
           image: extend-mock-http-client
           dockerFile: ./.infrastructure/Dockerfile
