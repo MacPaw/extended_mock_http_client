@@ -33,7 +33,32 @@ class MyTest extends KernelTestCase
         $mockHttpClient->addFixture(new HttpFixture(
             (new RequestMockBuilder())
                 ->methodEquals('GET')
-                ->urlEquals('')
+                ->urlEquals('http://test.test/api/v1/list')
+                ->queryShouldContain('page', '1')
+                ->build(),
+            new MockResponse('response body', [
+                'http_code' => 200
+            ])
+        ));
+        
+        $mockHttpClient->addFixture(new HttpFixture(
+            (new RequestMockBuilder())
+                ->addMethodComparator(new OrComparator([
+                    new StringEqualsComparator('GET'),
+                    new StringEqualsComparator('POST'),
+                ]))
+                ->addQueryComparator(new QueryComparator([
+                    new ArrayHasValueByKeyComparator('qwe', 'rty')
+                ]))
+                ->addUrlComparator(new UrlComparator([
+                    new StringEqualsComparator('http://test.test/foo/bar')
+                ]))
+                ->addBodyComparator(new JsonComparator([
+                    new ArrayHasValueByKeyComparator('int', 1),
+                    new CallbackComparator(function (array $data): bool {
+                        return isset($data['foo']) && $data['foo'] === 'bar';
+                    })
+                ]))
                 ->build(),
             new MockResponse('response body', [
                 'http_code' => 200
@@ -41,18 +66,6 @@ class MyTest extends KernelTestCase
         ));
     }
 }
-```
-
-### Setup readable ExtendedMockHttpClient errors
-Need to update your `phpunit.xml` file as follows
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<phpunit
-    ...
-    printerClass="ExtendedMockHttpClient\PHPUnit\Printer\ExtendedMockHttpClientParameterizedExceptionResultPrinter"
->
-    // ....
-</phpunit>
 ```
 
 ### Todo list

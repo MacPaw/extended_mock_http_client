@@ -8,17 +8,21 @@ use Throwable;
 
 class ExtendedMockHttpClientParameterizedException extends AbstractExtendedMockHttpClientException
 {
-    private $parameters;
-
     public function __construct(string $message, array $parameters = [], int $code = 0, Throwable $previous = null)
     {
-        $this->parameters = $parameters;
+        $parametersAsString = '';
+        foreach ($parameters as $key => $value) {
+            // @codingStandardsIgnoreStart
+            $valueAsString = print_r($value, true);
+            // @codingStandardsIgnoreEnd
 
-        parent::__construct($message, $code, $previous);
-    }
+            $parametersAsString .= sprintf("    %s: %s\n", $key, $valueAsString);
+        }
 
-    public function getParameters(): array
-    {
-        return $this->parameters;
+        parent::__construct(
+            sprintf("%s\n%s", $message, $parametersAsString),
+            $code,
+            $previous
+        );
     }
 }
