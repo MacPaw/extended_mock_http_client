@@ -75,16 +75,16 @@ class MyTest extends KernelTestCase
   * Get last request/response (or by index)
   * Some kind of assert, it should check that history contain some request
 * Add Comparators and function to it
-  * Add `OR` and `AND` comparators
   * Http method comparators
     * `InArray` comparator 
   * Url comparators
-    * `callable`
     * `regex`
   * Query comparators
+    * `regex`
   * Header comparators
   * Body comparators
-    * Json body comparator
+    * for different formats
+  * Array comparators
 * More docs and examples
 * Write Symfony bundle possibility to add custom comparators through DI
 * Add possibility create response based on request data

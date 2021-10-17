@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ExtendedMockHttpClient\Comparators;
 
-class StringEquals implements ComparatorInterface
+class StringEqualsComparator implements ComparatorInterface
 {
     private $value;
 
