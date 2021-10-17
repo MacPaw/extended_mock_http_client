@@ -1,0 +1,65 @@
+pr:
+  - master
+
+trigger:
+  - master
+resources:
+  repositories:
+    - repository: ops-macpaw-io
+      type: github
+      name: MacPaw/ops-macpaw-io
+      ref: refs/heads/master
+      endpoint: MacPaw
+
+variables:
+  - group: github
+  - name: project
+    value: macpaw
+  - name: component
+    value: libs
+
+stages:
+  - stage: main
+    pool:
+      name: default-ops
+    displayName: Build & Deploy
+    jobs:
+      - template: azp/templates/build-service.yaml@ops-macpaw-io
+        parameters:
+          strategy:
+            matrix:
+              8.0:
+                scope: 8.0
+                dockerTag: $(Build.SourceBranchName)-$(Build.BuildNumber)-8.0
+              7.4:
+                scope: 7.4
+                dockerTag: $(Build.SourceBranchName)-$(Build.BuildNumber)-7.4
+              7.3:
+                scope: 7.3
+                dockerTag: $(Build.SourceBranchName)-$(Build.BuildNumber)-7.3
+              7.2:
+                scope: 7.2
+                dockerTag: $(Build.SourceBranchName)-$(Build.BuildNumber)-7.2
+          name: extendMockHTTPClient
+          containerRegistry: gcr
+          projectGCR: $(project)/$(component)
+          image: extend-mock-http-client
+          dockerFile: ./.infrastructure/Dockerfile
+          buildArgs:
+            PHP_VERSION: $(scope)
+          targets:
+            - cli
+          command: ci-checks
+          reports:
+            composer-validate:
+              file: composer-validate.txt
+              overrides: --set name="composer-validate ($(scope))"
+            phpcs:
+              file: phpcs.xml
+              overrides: --set name="phpcs ($(scope))"
+            phpunit:
+              file: phpunit.xml
+              overrides: --parameter prefix=/app --set name="phpunit ($(scope))"
+            phpstan:
+              file: phpstan.xml
+              overrides: --set name="phpstan ($(scope))"
