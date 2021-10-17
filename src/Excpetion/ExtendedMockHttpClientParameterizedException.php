@@ -10,8 +10,17 @@ class ExtendedMockHttpClientParameterizedException extends AbstractExtendedMockH
 {
     public function __construct(string $message, array $parameters = [], int $code = 0, Throwable $previous = null)
     {
+        $parametersAsString = '';
+        foreach ($parameters as $key => $value) {
+            // @codingStandardsIgnoreStart
+            $valueAsString = print_r($value, true);
+            // @codingStandardsIgnoreEnd
+
+            $parametersAsString .= sprintf("    %s: %s\n", $key, $valueAsString);
+        }
+
         parent::__construct(
-            sprintf("%s\n%s", $message, print_r($parameters, true)),
+            sprintf("%s\n%s", $message, $parametersAsString),
             $code,
             $previous
         );
