@@ -8,6 +8,7 @@ use ExtendedMockHttpClient\Collection\FixtureCollection;
 use ExtendedMockHttpClient\Excpetion\NotFountSuitableFixtureException;
 use ExtendedMockHttpClient\Model\HttpFixture;
 use Iterator;
+use Symfony\Component\Cache\ResettableInterface;
 use Symfony\Component\HttpClient\HttpClientTrait;
 use Symfony\Component\HttpClient\Response\MockResponse;
 use Symfony\Component\HttpClient\Response\ResponseStream;
@@ -16,7 +17,7 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 use Symfony\Contracts\HttpClient\ResponseStreamInterface;
 use TypeError;
 
-class ExtendedMockHttpClient implements HttpClientInterface
+class ExtendedMockHttpClient implements HttpClientInterface, ResettableInterface
 {
     use HttpClientTrait;
 
@@ -85,5 +86,15 @@ class ExtendedMockHttpClient implements HttpClientInterface
         }
 
         return new ResponseStream(MockResponse::stream($responses, $timeout));
+    }
+
+    public function getBaseUri(): string
+    {
+        return $this->baseUri;
+    }
+
+    public function reset(): void
+    {
+        $this->fixtureCollection->reset();
     }
 }
