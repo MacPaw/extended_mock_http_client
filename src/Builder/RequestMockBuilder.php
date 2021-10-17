@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace ExtendedMockHttpClient\Builder;
 
+use ExtendedMockHttpClient\Comparators\ArrayHasValueByKeyComparator;
 use ExtendedMockHttpClient\Comparators\ComparatorInterface;
-use ExtendedMockHttpClient\Comparators\Query\QueryShouldContain;
-use ExtendedMockHttpClient\Comparators\Url\StringEquals as UrlStringEquals;
-use ExtendedMockHttpClient\Comparators\StringEquals;
+use ExtendedMockHttpClient\Comparators\QueryComparator;
+use ExtendedMockHttpClient\Comparators\StringEqualsComparator;
+use ExtendedMockHttpClient\Comparators\UrlComparator;
 use ExtendedMockHttpClient\Model\RequestMock;
 
 class RequestMockBuilder
@@ -23,28 +24,48 @@ class RequestMockBuilder
 
     public function methodEquals(string $method): self
     {
-        $this->methodComparators[] = new StringEquals($method);
-
-        return $this;
+        return $this->addMethodComparator(new StringEqualsComparator($method));
     }
 
     public function urlEquals(string $url): self
     {
-        $this->urlComparators[] = new UrlStringEquals($url);
-
-        return $this;
+        return $this->addUrlComparator(new UrlComparator([new StringEqualsComparator($url)]));
     }
 
-    public function queryShouldContain(string $fieldName, string $value): self
+    public function queryShouldContain(string $key, string $value): self
     {
-        $this->queryComparators[] = new QueryShouldContain($fieldName, $value);
-
-        return $this;
+        return $this->addQueryComparator(new QueryComparator([new ArrayHasValueByKeyComparator($key, $value)]));
     }
 
     public function bodyEquals(string $body): self
     {
-        $this->bodyComparators[] = new StringEquals($body);
+        return $this->addBodyComparator(new StringEqualsComparator($body));
+    }
+
+    public function addMethodComparator(ComparatorInterface $comparator): self
+    {
+        $this->methodComparators[] = $comparator;
+
+        return $this;
+    }
+
+    public function addUrlComparator(ComparatorInterface $comparator): self
+    {
+        $this->urlComparators[] = $comparator;
+
+        return $this;
+    }
+
+    public function addQueryComparator(ComparatorInterface $comparator): self
+    {
+        $this->queryComparators[] = $comparator;
+
+        return $this;
+    }
+
+    public function addBodyComparator(ComparatorInterface $comparator): self
+    {
+        $this->bodyComparators[] = $comparator;
 
         return $this;
     }
