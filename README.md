@@ -35,6 +35,7 @@ class MyTest extends KernelTestCase
                 ->methodEquals('GET')
                 ->urlEquals('http://test.test/api/v1/list')
                 ->queryShouldContain('page', '1')
+                ->headersShouldContain('X-header-name', 'Qwerty')
                 ->build(),
             new MockResponse('response body', [
                 'http_code' => 200
@@ -59,6 +60,10 @@ class MyTest extends KernelTestCase
                         return isset($data['foo']) && $data['foo'] === 'bar';
                     })
                 ]))
+                ->addHeadersComparator(new AndComparator([
+                    new ArrayHasValueByKeyComparator('x-header-name', 'Qwerty'),
+                    new ArrayHasValueByKeyComparator('content-type', 'application/json'),
+                ]))
                 ->build(),
             new MockResponse('response body', [
                 'http_code' => 200
@@ -81,7 +86,6 @@ class MyTest extends KernelTestCase
     * `regex`
   * Query comparators
     * `regex`
-  * Header comparators
   * Body comparators
     * for different formats
   * Array comparators

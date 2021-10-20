@@ -17,6 +17,8 @@ class RequestMock
     private $queryComparators;
     /** @var ComparatorInterface[] */
     private $bodyComparators;
+    /** @var ComparatorInterface[] */
+    private $headersComparators;
 
     public function __construct(RequestMockBuilder $builder)
     {
@@ -24,9 +26,10 @@ class RequestMock
         $this->urlComparators = $builder->getUrlComparators();
         $this->queryComparators = $builder->getQueryComparators();
         $this->bodyComparators = $builder->getBodyComparators();
+        $this->headersComparators = $builder->getHeadersComparators();
     }
 
-    public function isSuitable(string $method, string $url, string $body): bool
+    public function isSuitable(string $method, string $url, string $body, array $headers): bool
     {
         foreach ($this->methodComparators as $comparator) {
             if (!$comparator->isMatch($method)) {
@@ -48,6 +51,12 @@ class RequestMock
 
         foreach ($this->bodyComparators as $comparator) {
             if (!$comparator->isMatch($body)) {
+                return false;
+            }
+        }
+
+        foreach ($this->headersComparators as $comparator) {
+            if (!$comparator->isMatch($headers)) {
                 return false;
             }
         }

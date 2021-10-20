@@ -29,9 +29,9 @@ class HttpFixture
         $this->response = $response;
     }
 
-    public function isSuitable(string $method, string $url, string $body): bool
+    public function isSuitable(string $method, string $url, string $body, array $headers): bool
     {
-        $isSuitable = $this->request->isSuitable($method, $url, $body);
+        $isSuitable = $this->request->isSuitable($method, $url, $body, $headers);
 
         if ($isSuitable) {
             ++$this->calledTimes;
