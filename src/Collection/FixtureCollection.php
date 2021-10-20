@@ -26,10 +26,10 @@ class FixtureCollection implements ResettableInterface
         $this->fixtures[] = $fixture;
     }
 
-    public function findSuitableFixture(string $method, string $url, string $body): ?HttpFixture
+    public function findSuitableFixture(string $method, string $url, string $body, array $headers): ?HttpFixture
     {
         foreach ($this->fixtures as $fixture) {
-            if ($fixture->isSuitable($method, $url, $body)) {
+            if ($fixture->isSuitable($method, $url, $body, $headers)) {
                 return $fixture;
             }
         }

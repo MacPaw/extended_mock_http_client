@@ -21,6 +21,8 @@ class RequestMockBuilder
     private $queryComparators = [];
     /** @var ComparatorInterface[] */
     private $bodyComparators = [];
+    /** @var ComparatorInterface[] */
+    private $headersComparators = [];
 
     public function methodEquals(string $method): self
     {
@@ -40,6 +42,11 @@ class RequestMockBuilder
     public function bodyEquals(string $body): self
     {
         return $this->addBodyComparator(new StringEqualsComparator($body));
+    }
+
+    public function headersShouldContain(string $key, string $value): self
+    {
+        return $this->addHeadersComparator(new ArrayHasValueByKeyComparator(strtolower($key), $value));
     }
 
     public function addMethodComparator(ComparatorInterface $comparator): self
@@ -66,6 +73,13 @@ class RequestMockBuilder
     public function addBodyComparator(ComparatorInterface $comparator): self
     {
         $this->bodyComparators[] = $comparator;
+
+        return $this;
+    }
+
+    public function addHeadersComparator(ComparatorInterface $comparator): self
+    {
+        $this->headersComparators[] = $comparator;
 
         return $this;
     }
@@ -100,6 +114,14 @@ class RequestMockBuilder
     public function getBodyComparators(): array
     {
         return $this->bodyComparators;
+    }
+
+    /**
+     * @return ComparatorInterface[]
+     */
+    public function getHeadersComparators(): array
+    {
+        return $this->headersComparators;
     }
 
     public function build(): RequestMock

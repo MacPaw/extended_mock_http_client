@@ -6,12 +6,13 @@ namespace ExtendedMockHttpClient\Excpetion;
 
 class NotFountSuitableFixtureException extends ExtendedMockHttpClientParameterizedException
 {
-    public static function fromRequestParameters(string $method, string $url, array $options): self
+    public static function fromRequestParameters(string $method, string $url, string $body, array $headers): self
     {
         return new self('Not found suitable fixture', [
             'method' => $method,
             'url' => $url,
-            'body' => $options['body'] ?? null,
+            'body' => $body,
+            'headers' => $headers,
         ], 500);
     }
 }

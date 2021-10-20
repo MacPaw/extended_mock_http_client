@@ -62,12 +62,17 @@ class ExtendedMockHttpClient implements HttpClientInterface, ResettableInterface
         $request = self::prepareRequest($method, $url, $options, ['base_uri' => $this->baseUri], true);
         $url = implode('', $request[0]);
         $options = $request[1];
-        $body = isset($options['body']) ? $options['body'] : '';
+        $body = $options['body'] ?? '';
+        $headers = array_map(static function ($value): string {
+            $value = explode(': ', $value[0]);
 
-        $fixture = $this->fixtureCollection->findSuitableFixture($method, $url, $body);
+            return implode('', array_slice($value, count($value) > 1 ? 1 : 0));
+        }, $options['normalized_headers'] ?? []);
+
+        $fixture = $this->fixtureCollection->findSuitableFixture($method, $url, $body, $headers);
 
         if ($fixture === null) {
-            throw NotFountSuitableFixtureException::fromRequestParameters($method, $url, $options);
+            throw NotFountSuitableFixtureException::fromRequestParameters($method, $url, $body, $headers);
         }
 
         return MockResponse::fromRequest($method, $url, $options, $fixture->getResponse());

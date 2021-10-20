@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ExtendedMockHttpClient\Tests\Functional;
 
 use ExtendedMockHttpClient\Builder\RequestMockBuilder;
+use ExtendedMockHttpClient\Comparators\AndComparator;
 use ExtendedMockHttpClient\Comparators\ArrayHasValueByKeyComparator;
 use ExtendedMockHttpClient\Comparators\CallbackComparator;
 use ExtendedMockHttpClient\Comparators\JsonComparator;
@@ -41,6 +42,10 @@ class ExtendedMockHttpClientBaseTest extends TestCase
                         return isset($data['foo']) && $data['foo'] === 'bar';
                     })
                 ]))
+                ->addHeadersComparator(new AndComparator([
+                    new ArrayHasValueByKeyComparator('x-header-name', 'Qwerty'),
+                    new ArrayHasValueByKeyComparator('content-type', 'application/json'),
+                ]))
                 ->build(),
             new MockResponse('response body', [
                 'http_code' => 200
@@ -48,7 +53,13 @@ class ExtendedMockHttpClientBaseTest extends TestCase
         ));
 
         $response = $client->request('POST', 'http://test.test/foo/bar?qwe=rty', [
-            'body' => '{"foo": "bar", "int": 1}'
+            'headers' => [
+                'X-header-name' => 'Qwerty',
+            ],
+            'json' => [
+                'foo' => 'bar',
+                'int' => 1,
+            ],
         ]);
 
         $this->assertSame(200, $response->getStatusCode());
@@ -140,6 +151,33 @@ class ExtendedMockHttpClientBaseTest extends TestCase
 
         $response = $client->request('POST', 'http://test.test/foo/bar?qwe=rty', [
             'body' => '{"foo": "bar", "int": 1}'
+        ]);
+
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame('response body', $response->getContent(false));
+    }
+
+    public function testSuccessHeadersShouldContain(): void
+    {
+        $client = new ExtendedMockHttpClient('http://test.test');
+        $client->addFixture(new HttpFixture(
+            (new RequestMockBuilder())
+                ->headersShouldContain('X-header-name', 'Qwerty')
+                ->headersShouldContain('Content-type', 'application/json')
+                ->build(),
+            new MockResponse('response body', [
+                'http_code' => 200
+            ])
+        ));
+
+        $response = $client->request('POST', 'http://test.test/foo/bar?qwe=rty', [
+            'headers' => [
+                'X-header-name' => 'Qwerty',
+            ],
+            'json' => [
+                'foo' => 'bar',
+                'int' => 1
+            ]
         ]);
 
         $this->assertSame(200, $response->getStatusCode());
