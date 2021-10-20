@@ -19,7 +19,7 @@ services:
     http_client_service_name:
         class: ExtendedMockHttpClient\ExtendedMockHttpClient
         arguments:
-            - 'https://foo.bar'
+            - 'https://test.host'
 ```
 
 And then in PHPUnit test do something like this
@@ -33,9 +33,10 @@ class MyTest extends KernelTestCase
         $mockHttpClient->addFixture(new HttpFixture(
             (new RequestMockBuilder())
                 ->methodEquals('GET')
-                ->urlEquals('http://test.test/api/v1/list')
+                ->urlEquals('http://test.host/api/v1/list')
                 ->queryShouldContain('page', '1')
                 ->headersShouldContain('X-header-name', 'Qwerty')
+                ->bodyRegex('/foobar/')
                 ->build(),
             new MockResponse('response body', [
                 'http_code' => 200
@@ -52,7 +53,7 @@ class MyTest extends KernelTestCase
                     new ArrayHasValueByKeyComparator('qwe', 'rty')
                 ]))
                 ->addUrlComparator(new UrlComparator([
-                    new StringEqualsComparator('http://test.test/foo/bar')
+                    new RegexComparator('/test.host\/foo\/bar/')
                 ]))
                 ->addBodyComparator(new JsonComparator([
                     new ArrayHasValueByKeyComparator('int', 1),
@@ -82,10 +83,7 @@ class MyTest extends KernelTestCase
 * Add Comparators and function to it
   * Http method comparators
     * `InArray` comparator 
-  * Url comparators
-    * `regex`
   * Query comparators
-    * `regex`
   * Body comparators
     * for different formats
   * Array comparators
