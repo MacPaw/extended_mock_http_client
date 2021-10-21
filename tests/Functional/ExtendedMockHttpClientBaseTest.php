@@ -11,6 +11,7 @@ use ExtendedMockHttpClient\Comparators\CallbackComparator;
 use ExtendedMockHttpClient\Comparators\JsonComparator;
 use ExtendedMockHttpClient\Comparators\OrComparator;
 use ExtendedMockHttpClient\Comparators\QueryComparator;
+use ExtendedMockHttpClient\Comparators\RegexComparator;
 use ExtendedMockHttpClient\Comparators\StringEqualsComparator;
 use ExtendedMockHttpClient\Comparators\UrlComparator;
 use ExtendedMockHttpClient\Excpetion\NotFountSuitableFixtureException;
@@ -34,7 +35,7 @@ class ExtendedMockHttpClientBaseTest extends TestCase
                     new ArrayHasValueByKeyComparator('qwe', 'rty')
                 ]))
                 ->addUrlComparator(new UrlComparator([
-                    new StringEqualsComparator('http://test.test/foo/bar')
+                    new RegexComparator('/test.test\/foo\/bar/')
                 ]))
                 ->addBodyComparator(new JsonComparator([
                     new ArrayHasValueByKeyComparator('int', 1),
