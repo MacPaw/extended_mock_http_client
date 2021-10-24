@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ExtendedMockHttpClient\Builder;
 
-use ExtendedMockHttpClient\Comparators\ArrayHasValueByKeyComparator;
+use ExtendedMockHttpClient\Comparators\ArrayComparator;
 use ExtendedMockHttpClient\Comparators\ComparatorInterface;
 use ExtendedMockHttpClient\Comparators\QueryComparator;
 use ExtendedMockHttpClient\Comparators\RegexComparator;
@@ -47,7 +47,7 @@ class RequestMockBuilder
 
     public function queryShouldContain(string $key, string $value): self
     {
-        return $this->addQueryComparator(new QueryComparator([new ArrayHasValueByKeyComparator($key, $value)]));
+        return $this->addQueryComparator(new QueryComparator([new ArrayComparator([$key => $value])]));
     }
 
     public function bodyEquals(string $body): self
@@ -62,7 +62,7 @@ class RequestMockBuilder
 
     public function headersShouldContain(string $key, string $value): self
     {
-        return $this->addHeadersComparator(new ArrayHasValueByKeyComparator(strtolower($key), $value));
+        return $this->addHeadersComparator(new ArrayComparator([strtolower($key) => $value]));
     }
 
     public function addMethodComparator(ComparatorInterface $comparator): self

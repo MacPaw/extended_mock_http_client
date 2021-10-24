@@ -5,12 +5,10 @@ declare(strict_types=1);
 namespace ExtendedMockHttpClient\Tests\Functional;
 
 use ExtendedMockHttpClient\Builder\RequestMockBuilder;
-use ExtendedMockHttpClient\Comparators\AndComparator;
-use ExtendedMockHttpClient\Comparators\ArrayHasValueByKeyComparator;
+use ExtendedMockHttpClient\Comparators\ArrayComparator;
 use ExtendedMockHttpClient\Comparators\CallbackComparator;
 use ExtendedMockHttpClient\Comparators\JsonComparator;
 use ExtendedMockHttpClient\Comparators\OrComparator;
-use ExtendedMockHttpClient\Comparators\QueryComparator;
 use ExtendedMockHttpClient\Comparators\RegexComparator;
 use ExtendedMockHttpClient\Comparators\StringEqualsComparator;
 use ExtendedMockHttpClient\Comparators\UrlComparator;
@@ -31,21 +29,17 @@ class ExtendedMockHttpClientBaseTest extends TestCase
                     new StringEqualsComparator('GET'),
                     new StringEqualsComparator('POST'),
                 ]))
-                ->addQueryComparator(new QueryComparator([
-                    new ArrayHasValueByKeyComparator('qwe', 'rty')
-                ]))
                 ->addUrlComparator(new UrlComparator([
                     new RegexComparator('/test.test\/foo\/bar/')
                 ]))
                 ->addBodyComparator(new JsonComparator([
-                    new ArrayHasValueByKeyComparator('int', 1),
                     new CallbackComparator(function (array $data): bool {
                         return isset($data['foo']) && $data['foo'] === 'bar';
                     })
                 ]))
-                ->addHeadersComparator(new AndComparator([
-                    new ArrayHasValueByKeyComparator('x-header-name', 'Qwerty'),
-                    new ArrayHasValueByKeyComparator('content-type', 'application/json'),
+                ->addHeadersComparator(new ArrayComparator([
+                    'x-header-name' => 'Qwerty',
+                    'content-type' => 'application/json',
                 ]))
                 ->build(),
             new MockResponse('response body', [
