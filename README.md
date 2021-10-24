@@ -50,20 +50,29 @@ class MyTest extends KernelTestCase
                     new StringEqualsComparator('POST'),
                 ]))
                 ->addQueryComparator(new QueryComparator([
-                    new ArrayHasValueByKeyComparator('qwe', 'rty')
+                    new ArrayComparator(['qwe' => 'rty'])
                 ]))
                 ->addUrlComparator(new UrlComparator([
                     new RegexComparator('/test.host\/foo\/bar/')
                 ]))
                 ->addBodyComparator(new JsonComparator([
-                    new ArrayHasValueByKeyComparator('int', 1),
+                    new ArrayComparator([
+                        'rootNode' => [
+                            123 => new StringEqualsComparator('value1'),
+                            'testKey' => new RegexComparator('/value\d+/'),
+                            '/regex\d+/' => 'value3',
+                        ]
+                    ]),
                     new CallbackComparator(function (array $data): bool {
                         return isset($data['foo']) && $data['foo'] === 'bar';
                     })
                 ]))
                 ->addHeadersComparator(new AndComparator([
-                    new ArrayHasValueByKeyComparator('x-header-name', 'Qwerty'),
-                    new ArrayHasValueByKeyComparator('content-type', 'application/json'),
+                    new ArrayCountComparator(3),
+                    new ArrayComparator([
+                        'x-header-name' => 'Qwerty',
+                        'content-type' => 'application/json',
+                    ]),
                 ]))
                 ->build(),
             new MockResponse('response body', [
@@ -82,11 +91,9 @@ class MyTest extends KernelTestCase
   * Some kind of assert, it should check that history contain some request
 * Add Comparators and function to it
   * Http method comparators
-    * `InArray` comparator 
   * Query comparators
   * Body comparators
     * for different formats
-  * Array comparators
 * More docs and examples
 * Write Symfony bundle possibility to add custom comparators through DI
 * Add possibility create response based on request data
