@@ -38,7 +38,7 @@ class ArrayComparator implements ComparatorInterface
                     continue;
                 }
 
-                if (!isset($actualArray[$expectedKey])) {
+                if (!array_key_exists($expectedKey, $actualArray)) {
                     return false;
                 }
 
