@@ -80,6 +80,9 @@ class ExtendedMockHttpClientArrayTest extends TestCase
                 'value1',
             ]],
             [[
+                'test1' => null,
+            ]],
+            [[
                 'test1' => 'value1',
                 'test2' => 'value2',
                 'test3' => 'value3',
@@ -93,6 +96,11 @@ class ExtendedMockHttpClientArrayTest extends TestCase
                 1,
                 2,
                 3,
+            ]],
+            [[
+                'test1' => 'value1',
+                'test2' => null,
+                'test3' => 'value3',
             ]],
             [[
                 'test1' => [
