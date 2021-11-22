@@ -168,6 +168,7 @@ class ExtendedMockHttpClientBaseTest extends TestCase
         $response = $client->request('POST', 'http://test.test/foo/bar?qwe=rty', [
             'headers' => [
                 'X-header-name' => 'Qwerty',
+                'X-null-parameter' => null,
             ],
             'json' => [
                 'foo' => 'bar',

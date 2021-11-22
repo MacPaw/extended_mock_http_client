@@ -64,7 +64,7 @@ class ExtendedMockHttpClient implements HttpClientInterface, ResettableInterface
         $options = $request[1];
         $body = $options['body'] ?? '';
         $headers = array_map(static function ($value): string {
-            $value = explode(': ', $value[0]);
+            $value = explode(': ', (string) array_pop($value));
 
             return implode('', array_slice($value, count($value) > 1 ? 1 : 0));
         }, $options['normalized_headers'] ?? []);
