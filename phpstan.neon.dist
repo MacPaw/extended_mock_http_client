@@ -6,3 +6,4 @@ parameters:
     treatPhpDocTypesAsCertain: false
     ignoreErrors:
         - '#Dynamic call to static method PHPUnit\\Framework\\.*#'
+        - '#Parameter \#1 \$responses of static method Symfony\\Component\\HttpClient\\Response\\MockResponse::stream\(\).*#'
