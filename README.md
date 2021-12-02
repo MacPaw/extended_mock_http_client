@@ -1,5 +1,9 @@
 # ExtendedMockHttpClient
 
+| Version | Build Status | Code Coverage |
+|:---------:|:-------------:|:-----:|
+| `master`| [![CI][master Build Status Image]][master Build Status] | [![Coverage Status][master Code Coverage Image]][master Code Coverage] |
+
 ### Install
 ```shell script
 composer require macpaw/extended_mock_http_client
@@ -97,3 +101,9 @@ class MyTest extends KernelTestCase
 * More docs and examples
 * Write Symfony bundle possibility to add custom comparators through DI
 * Add possibility create response based on request data
+
+
+[master Build Status]: https://github.com/macpaw/ExtendedMockHttpClient/actions?query=workflow%3ACI+branch%3Amaster
+[master Build Status Image]: https://github.com/macpaw/ExtendedMockHttpClient/workflows/CI/badge.svg?branch=master
+[master Code Coverage]: https://codecov.io/gh/macpaw/ExtendedMockHttpClient/branch/master
+[master Code Coverage Image]: https://img.shields.io/codecov/c/github/macpaw/ExtendedMockHttpClient/master?logo=codecov
