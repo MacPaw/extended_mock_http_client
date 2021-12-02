@@ -39,7 +39,7 @@ jobs:
               run: composer phpstan
 
     composer-validate:
-        name: PHPStan
+        name: Composer Validate
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
