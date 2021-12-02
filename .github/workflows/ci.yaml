@@ -65,5 +65,5 @@ jobs:
               run: composer install
 
             - name: Run PHPUnit tests
-              run: vendor/bin/simple-phpunit
+              run: composer phpunit
               if: matrix.coverage == 'none'
