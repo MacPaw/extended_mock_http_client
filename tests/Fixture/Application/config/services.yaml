@@ -1,0 +1,20 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+    ExtendedMockHttpClient\Factory\HttpFixtureFactory:
+        arguments:
+            - '%allowed_nested_keys%'
+        calls:
+            - add: ['body', 'custom']
+            - add: ['method', 'custom']
+            - add: ['query', 'custom']
+
+    ExtendedMockHttpClient\Factory\HttpFixtureBuilderFactory:
+        class: ExtendedMockHttpClient\Tests\Fixture\Application\Factory\HttpFixtureBuilderFactory
+
+    ExtendedMockHttpClient\ExtendedMockHttpClient:
+        arguments:
+            - 'https://test.test'

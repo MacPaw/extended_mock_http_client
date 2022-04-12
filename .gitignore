@@ -1,11 +1,12 @@
-/vendor/
+/vendor
 /.phpcs-cache
 /.idea
 /phpcs.xml
 /phpstan.neon
 /.phpunit.result.cache
 /phpunit.xml
-composer.lock
+/composer.lock
+/var
 
-/node_modules/
+/node_modules
 /package-lock.json

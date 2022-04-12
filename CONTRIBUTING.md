@@ -1,4 +1,4 @@
-# Contribute to Symfony Health Check Bundle
+# Contribute to ExtendedMockHttpClient
 
 Thank you for contributing!
 

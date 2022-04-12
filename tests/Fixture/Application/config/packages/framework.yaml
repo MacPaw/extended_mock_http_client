@@ -1,0 +1,4 @@
+framework:
+    secret: 'secret'
+    php_errors:
+        log: true

@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace ExtendedMockHttpClient\Collection;
 
-use ExtendedMockHttpClient\Model\HttpFixture;
-use Symfony\Component\Cache\ResettableInterface;
+use ExtendedMockHttpClient\HttpFixture\HttpFixture;
 
-class FixtureCollection implements ResettableInterface
+class FixtureCollection
 {
     /**
      * @var HttpFixture[]
@@ -26,10 +25,15 @@ class FixtureCollection implements ResettableInterface
         $this->fixtures[] = $fixture;
     }
 
-    public function findSuitableFixture(string $method, string $url, string $body, array $headers): ?HttpFixture
-    {
+    public function findSuitableFixture(
+        string $method,
+        string $url,
+        string $query,
+        string $body,
+        array $headers
+    ): ?HttpFixture {
         foreach ($this->fixtures as $fixture) {
-            if ($fixture->isSuitable($method, $url, $body, $headers)) {
+            if ($fixture->isSuitable($method, $url, $query, $body, $headers)) {
                 return $fixture;
             }
         }

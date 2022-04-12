@@ -33,6 +33,7 @@
     <rule ref="Generic.PHP.RequireStrictTypes"/>
     <rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
     <rule ref="Generic.Arrays.DisallowLongArraySyntax.Found"></rule>
+    <rule ref="Squiz.Commenting.FunctionComment.SpacingAfterParamType"></rule>
 
     <file>src/</file>
     <file>tests/</file>
