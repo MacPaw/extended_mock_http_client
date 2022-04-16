@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+COMMAND=$(cat <<-END
+  apt-get update && apt-get install -y --no-install-recommends git libzip-dev libicu-dev unzip && apt-get clean
+  curl --silent https://getcomposer.org/download/latest-2.x/composer.phar -o /usr/bin/composer && chmod a+x /usr/bin/composer
+  composer install
+  composer dev-tests
+END)
+
+docker run -it --rm --name extended_mock_http_client-php72 -v "$PWD":/app -w /app php:7.2-cli bash -c "$COMMAND"
+docker run -it --rm --name extended_mock_http_client-php73 -v "$PWD":/app -w /app php:7.3-cli bash -c "$COMMAND"
+docker run -it --rm --name extended_mock_http_client-php74 -v "$PWD":/app -w /app php:7.4-cli bash -c "$COMMAND"
+docker run -it --rm --name extended_mock_http_client-php80 -v "$PWD":/app -w /app php:8.0-cli bash -c "$COMMAND"
+docker run -it --rm --name extended_mock_http_client-php81 -v "$PWD":/app -w /app php:8.1-cli bash -c "$COMMAND"
