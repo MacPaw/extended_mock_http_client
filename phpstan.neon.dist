@@ -1,9 +1,16 @@
 parameters:
+    excludes_analyse:
     paths:
         - src
         - tests
-    level: 5
+    excludePaths:
+        - tests/Fixture/Application/Kernel.php
+        - tests/Functional/AbstractKernelTestCase.php
+    symfony:
+        container_xml_path: '%rootDir%/../../../var/cache/test/ExtendedMockHttpClient_Tests_Fixture_Application_KernelTestDebugContainer.xml'
     treatPhpDocTypesAsCertain: false
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
-        - '#Dynamic call to static method PHPUnit\\Framework\\.*#'
-        - '#Parameter \#1 \$responses of static method Symfony\\Component\\HttpClient\\Response\\MockResponse::stream\(\).*#'
+        -
+            message: '#Dead catch - Throwable is never thrown in the try block.#'
+            path: src/HttpFixture/Request/DataTransformer/JsonToArrayDataTransformer.php

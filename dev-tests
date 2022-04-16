@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+PHP_VERSION="8.1"
+SYMFONY_VERSION="6.0"
+
+printHelp() {
+  echo "Run tests"
+  echo " "
+  echo "Options:"
+  echo "  -h, --help                Show this help"
+  echo "  --php                   Specific php version"
+  echo "  --symfony               Specific Symfony version"
+  echo " "
+  echo "Example:"
+  echo "  ./dev-tests --php=7.2 --symfony=4.4"
+  echo "  ./dev-tests --php=7.2 --symfony=5.0"
+
+  exit 0
+}
+
+while test $# -gt 0; do
+  case "$1" in
+    -h|--help)
+      printHelp
+      ;;
+    --php)
+      PHP_VERSION=$2
+      shift 2
+      ;;
+    --symfony)
+      SYMFONY_VERSION=$2
+      shift 2
+      ;;
+    *)
+      printHelp
+      ;;
+  esac
+done
+
+echo "PHP version: $PHP_VERSION"
+echo "Symfony version: $SYMFONY_VERSION"
+
+COMMAND=$(cat <<-END
+  apt-get update && apt-get install -y --no-install-recommends git libzip-dev libicu-dev unzip && apt-get clean
+  curl --silent https://getcomposer.org/download/latest-2.x/composer.phar -o /usr/bin/composer && chmod a+x /usr/bin/composer
+  composer update --with-all-dependencies \
+      symfony/http-client:$SYMFONY_VERSION \
+      symfony/cache:$SYMFONY_VERSION \
+      symfony/config:$SYMFONY_VERSION \
+      symfony/dependency-injection:$SYMFONY_VERSION \
+      symfony/framework-bundle:$SYMFONY_VERSION \
+      symfony/http-foundation:$SYMFONY_VERSION \
+      symfony/http-kernel:$SYMFONY_VERSION \
+      symfony/yaml:$SYMFONY_VERSION
+  composer install
+  composer dev-tests
+END)
+
+docker run -it --rm --name extended_mock_http_client-php -v "$PWD":/app -w /app php:$PHP_VERSION-cli bash -c "$COMMAND"

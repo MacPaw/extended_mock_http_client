@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace ExtendedMockHttpClient;
 
+use ExtendedMockHttpClient\Builder\HttpFixtureBuilder;
 use ExtendedMockHttpClient\Collection\FixtureCollection;
 use ExtendedMockHttpClient\Excpetion\NotFountSuitableFixtureException;
-use ExtendedMockHttpClient\Model\HttpFixture;
-use Iterator;
+use ExtendedMockHttpClient\Factory\HttpFixtureBuilderFactory;
+use ExtendedMockHttpClient\HttpFixture\HttpFixture;
 use Symfony\Component\Cache\ResettableInterface;
 use Symfony\Component\HttpClient\HttpClientTrait;
 use Symfony\Component\HttpClient\Response\MockResponse;
@@ -32,24 +33,57 @@ class ExtendedMockHttpClient implements HttpClientInterface, ResettableInterface
     private $baseUri;
 
     /**
-     * @param string $baseUri
-     * @param HttpFixture|HttpFixture[]|iterable|null $fixtures
+     * @var HttpFixtureBuilderFactory
      */
-    public function __construct(string $baseUri, $fixtures = null)
+    private $httpFixtureBuilderFactory;
+
+    public function __construct(string $baseUri, HttpFixtureBuilderFactory $httpFixtureBuilderFactory)
     {
+        $this->httpFixtureBuilderFactory = $httpFixtureBuilderFactory;
         $this->fixtureCollection = new FixtureCollection();
-
-        if ($fixtures instanceof HttpFixture) {
-            $fixtures = [$fixtures];
-        }
-
-        if (!$fixtures instanceof Iterator && null !== $fixtures) {
-            foreach ($fixtures as $fixture) {
-                $this->addFixture($fixture);
-            }
-        }
-
         $this->baseUri = $baseUri;
+    }
+
+    public function getHttpFixtureBuilder(): HttpFixtureBuilder
+    {
+        return $this->httpFixtureBuilderFactory->create();
+    }
+
+    public function createFixture(
+        string $method = null,
+        string $url = null,
+        string $body = null,
+        array $headers = null,
+        int $responseCode = null,
+        string $responseBody = null
+    ): HttpFixture {
+        $builder = $this->httpFixtureBuilderFactory->create();
+
+        if (is_string($method)) {
+            $builder->request($builder->method($method));
+        }
+
+        if (is_string($url)) {
+            $query = parse_url($url, PHP_URL_QUERY);
+            if (is_string($query)) {
+                $builder->request($builder->url($url));
+            }
+
+            [$url] = explode('?', $url);
+            $builder->request($builder->url($url));
+        }
+
+        if (is_string($body)) {
+            $builder->request($builder->body($body));
+        }
+
+        if (is_array($headers)) {
+            $builder->request($builder->headers($headers));
+        }
+
+        $builder->response($responseCode ?? 200, $responseBody ?? '');
+
+        return $builder->build();
     }
 
     public function addFixture(HttpFixture $fixture): void
@@ -61,6 +95,8 @@ class ExtendedMockHttpClient implements HttpClientInterface, ResettableInterface
     {
         $request = self::prepareRequest($method, $url, $options, ['base_uri' => $this->baseUri], true);
         $url = implode('', $request[0]);
+        $query = parse_url($url, PHP_URL_QUERY) ?? '';
+        [$url] = explode('?', $url);
         $options = $request[1];
         $body = $options['body'] ?? '';
         $headers = array_map(static function ($value): string {
@@ -69,13 +105,18 @@ class ExtendedMockHttpClient implements HttpClientInterface, ResettableInterface
             return implode('', array_slice($value, count($value) > 1 ? 1 : 0));
         }, $options['normalized_headers'] ?? []);
 
-        $fixture = $this->fixtureCollection->findSuitableFixture($method, $url, $body, $headers);
+        $fixture = $this->fixtureCollection->findSuitableFixture($method, $url, $query, $body, $headers);
 
         if ($fixture === null) {
-            throw NotFountSuitableFixtureException::fromRequestParameters($method, $url, $body, $headers);
+            throw NotFountSuitableFixtureException::fromRequestParameters($method, $url, $query, $body, $headers);
         }
 
-        return MockResponse::fromRequest($method, $url, $options, $fixture->getResponse());
+        return MockResponse::fromRequest(
+            $method,
+            $url,
+            $options,
+            $fixture->getResponse($method, $url, $query, $body, $headers)
+        );
     }
 
     public function stream($responses, float $timeout = null): ResponseStreamInterface

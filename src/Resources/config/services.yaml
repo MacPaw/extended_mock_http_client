@@ -1,0 +1,27 @@
+parameters:
+    allowed_nested_keys: {
+        '': [ 'request', 'response' ],
+        'request': [ 'method', 'url', 'query', 'body', 'headers' ],
+        'method': [ 'and', 'or', 'stringEquals', 'stringRegex', 'inArray', 'callback' ],
+        'url': [ 'and', 'or', 'stringEquals', 'stringRegex', 'inArray', 'callback', 'urlToArray' ],
+        'query': [ 'and', 'or', 'stringEquals', 'stringRegex', 'inArray', 'callback', 'queryToArray' ],
+        'body': [ 'and', 'or', 'stringEquals', 'stringRegex', 'inArray', 'callback', 'jsonToArray' ],
+        'headers': [ 'and', 'or', 'arrayContain', 'arrayCount', 'callback' ],
+        'and': [ 'and', 'or', 'stringEquals', 'stringRegex', 'arrayContain', 'inArray', 'arrayCount', 'callback', 'jsonToArray', 'queryToArray', 'urlToArray' ],
+        'or': [ 'and', 'or', 'stringEquals', 'stringRegex', 'arrayContain', 'inArray', 'arrayCount', 'callback', 'jsonToArray', 'queryToArray', 'urlToArray' ],
+        'jsonToArray': [ 'and', 'or', 'arrayContain', 'arrayCount', 'callback' ],
+        'queryToArray': [ 'and', 'or', 'arrayContain', 'arrayCount', 'callback' ],
+        'urlToArray': [ 'and', 'or', 'arrayContain', 'arrayCount', 'callback' ],
+    }
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+    ExtendedMockHttpClient\Factory\HttpFixtureFactory:
+        arguments:
+            - '%allowed_nested_keys%'
+
+    ExtendedMockHttpClient\Factory\HttpFixtureBuilderFactory: ~
