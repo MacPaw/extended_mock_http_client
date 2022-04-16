@@ -7,11 +7,27 @@ namespace ExtendedMockHttpClient\Tests\Fixture\Application;
 use ExtendedMockHttpClient\ExtendedMockHttpClientBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
+use Symfony\Component\Routing\RouteCollectionBuilder;
 
 class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
+
+    /**
+     * This method necessary for old symfony versions
+     */
+    protected function configureRoutes(RouteCollectionBuilder $routes): void
+    {
+    }
+
+    protected function configureContainer(ContainerBuilder $c, LoaderInterface $loader): void
+    {
+        $loader->load(__DIR__.'/config/packages/framework.yaml');
+        $loader->load(__DIR__.'/config/services.yaml');
+    }
 
     public function registerBundles(): iterable
     {
@@ -19,10 +35,5 @@ class Kernel extends BaseKernel
             new FrameworkBundle(),
             new ExtendedMockHttpClientBundle(),
         ];
-    }
-
-    private function getConfigDir(): string
-    {
-        return $this->getProjectDir() . '/tests/Fixture/Application/config';
     }
 }
