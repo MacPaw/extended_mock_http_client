@@ -9,4 +9,8 @@ parameters:
     symfony:
         container_xml_path: '%rootDir%/../../../var/cache/test/ExtendedMockHttpClient_Tests_Fixture_Application_KernelTestDebugContainer.xml'
     treatPhpDocTypesAsCertain: false
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
+        -
+            message: '#Dead catch - Throwable is never thrown in the try block.#'
+            path: src/HttpFixture/Request/DataTransformer/JsonToArrayDataTransformer.php

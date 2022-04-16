@@ -35,6 +35,9 @@ jobs:
             - name: Install dependencies
               run: composer install --no-progress --no-interaction --prefer-dist
 
+            - name: Build kernel cache
+              run: php ./tests/Fixture/Application/bootstrap.php
+
             - name: Run script
               run: composer phpstan
 
