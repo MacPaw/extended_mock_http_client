@@ -71,6 +71,12 @@ jobs:
               run: |
                   composer require symfony/http-client:${{ matrix.symfony-versions }} --no-update --no-scripts
                   composer require symfony/cache:${{ matrix.symfony-versions }} --no-update --no-scripts
+                  composer require symfony/config:${{ matrix.symfony-versions }} --no-update --no-scripts
+                  composer require symfony/dependency-injection:${{ matrix.symfony-versions }} --no-update --no-scripts
+                  composer require symfony/framework-bundle:${{ matrix.symfony-versions }} --no-update --no-scripts
+                  composer require symfony/http-foundation:${{ matrix.symfony-versions }} --no-update --no-scripts
+                  composer require symfony/http-kernel:${{ matrix.symfony-versions }} --no-update --no-scripts
+                  composer require symfony/yaml:${{ matrix.symfony-versions }} --no-update --no-scripts
 
             - name: Install dependencies
               run: composer install
