@@ -25,8 +25,8 @@ class Kernel extends BaseKernel
 
     protected function configureContainer(ContainerBuilder $c, LoaderInterface $loader): void
     {
-        $loader->load(__DIR__.'/config/packages/framework.yaml');
-        $loader->load(__DIR__.'/config/services.yaml');
+        $loader->load(__DIR__ . '/config/packages/framework.yaml');
+        $loader->load(__DIR__ . '/config/services.yaml');
     }
 
     public function registerBundles(): iterable
