@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [2.6.1](https://github.com/MacPaw/ExtendedMockHttpClient/compare/v2.6.0...v2.6.1) (2022-04-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api,builder,bundle:** Rewrote almost all
+
+### Features
+
+* **api,builder,bundle:** Rewrote almost all ([d7f75d3](https://github.com/MacPaw/ExtendedMockHttpClient/commit/d7f75d3529a90db895fb24487dbfe19bdf9adfa7))
+
+
+### Bug Fixes
+
+* **api,builder,bundle:** added script to run tests locally ([6e018fd](https://github.com/MacPaw/ExtendedMockHttpClient/commit/6e018fd211ea25b7491898f363841f5c7eaf26fe))
+* **api,builder,bundle:** fix ci tests ([6f32a52](https://github.com/MacPaw/ExtendedMockHttpClient/commit/6f32a524c66b159f6620853a3f6dc917833d4b5a))
+* **api,builder,bundle:** fix code style ([dcdd2ad](https://github.com/MacPaw/ExtendedMockHttpClient/commit/dcdd2ad1c45175ed989561962021cb46b401feff))
+* **api,builder,bundle:** fix Kernel class for support old Symfony versions ([9985cbe](https://github.com/MacPaw/ExtendedMockHttpClient/commit/9985cbebdd375af54d49aea7193c6304b6a945b9))
+* **api,builder,bundle:** fix phpstan ([08573f2](https://github.com/MacPaw/ExtendedMockHttpClient/commit/08573f26565169f13c7ddcb3d9386a31fb8a34b2))
+* **api,builder,bundle:** fix support different php versions ([4462338](https://github.com/MacPaw/ExtendedMockHttpClient/commit/446233819af9b89c249ce13dc56f24f26d78f956))
+* **api,builder,bundle:** improve dev-tests shll script ([63fc3dd](https://github.com/MacPaw/ExtendedMockHttpClient/commit/63fc3dda1e8eccb38d3e64d2e1ddc9280c2f37f2))
+
 ## [2.6.0](https://github.com/MacPaw/ExtendedMockHttpClient/compare/v2.5.2...v2.6.0) (2021-12-06)
 
 
