@@ -77,6 +77,26 @@ class BodyTest extends AbstractExtendedMockHttpClientTestCase
         self::assertEquals(200, $response->getStatusCode());
     }
 
+    public function testFormData(): void
+    {
+        $builder = $this->client->getHttpFixtureBuilder();
+        $httpFixture = $builder
+            ->request($builder->body($builder->formDataToArray(
+                $builder->arrayContain([
+                    'foo' => 'bar'
+                ])
+            )))
+            ->response(200)
+            ->build();
+        $this->client->addFixture($httpFixture);
+
+        $response = $this->client->request('POST', 'https://test.test', [
+            'body' => 'foo=bar&baz=123'
+        ]);
+
+        self::assertEquals(200, $response->getStatusCode());
+    }
+
     public function testCallback(): void
     {
         $builder = $this->client->getHttpFixtureBuilder();

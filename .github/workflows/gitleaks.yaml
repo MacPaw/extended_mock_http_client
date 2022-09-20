@@ -13,4 +13,4 @@ jobs:
               uses: actions/checkout@v1
 
             - name: Run gitleaks
-              uses: zricethezav/gitleaks-action@master
+              uses: gitleaks/gitleaks-action@v1.6.0
