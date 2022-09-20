@@ -19,6 +19,7 @@ use ExtendedMockHttpClient\HttpFixture\Request\Comparator\InArrayComparator;
 use ExtendedMockHttpClient\HttpFixture\Request\Comparator\OrComparator;
 use ExtendedMockHttpClient\HttpFixture\Request\Comparator\StringEqualsComparator;
 use ExtendedMockHttpClient\HttpFixture\Request\Comparator\StringRegexComparator;
+use ExtendedMockHttpClient\HttpFixture\Request\DataTransformer\FormDataToArrayDataTransformer;
 use ExtendedMockHttpClient\HttpFixture\Request\DataTransformer\JsonToArrayDataTransformer;
 use ExtendedMockHttpClient\HttpFixture\Request\DataTransformer\QueryToArrayDataTransformer;
 use ExtendedMockHttpClient\HttpFixture\Request\DataTransformer\UrlToArrayDataTransformer;
@@ -290,6 +291,14 @@ class HttpFixtureBuilder
     public function jsonToArray(...$items): JsonToArrayDataTransformer
     {
         return new JsonToArrayDataTransformer(...$items);
+    }
+
+    /**
+     * @param HttpFixtureRequestItemInterface ...$items
+     */
+    public function formDataToArray(...$items): FormDataToArrayDataTransformer
+    {
+        return new FormDataToArrayDataTransformer(...$items);
     }
 
     /**
