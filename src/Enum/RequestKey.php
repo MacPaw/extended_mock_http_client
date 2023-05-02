@@ -4,53 +4,41 @@ declare(strict_types=1);
 
 namespace ExtendedMockHttpClient\Enum;
 
-use MyCLabs\Enum\Enum;
-
-/**
- * @method static RequestKey METHOD()
- * @method static RequestKey URL()
- * @method static RequestKey QUERY()
- * @method static RequestKey BODY()
- * @method static RequestKey HEADERS()
- */
-class RequestKey extends Enum
+enum RequestKey: string
 {
-    public const METHOD = 'method';
-    public const URL = 'url';
-    public const QUERY = 'query';
-    public const BODY = 'body';
-    public const HEADERS = 'headers';
+    case METHOD = 'method';
+    case URL = 'url';
+    case QUERY = 'query';
+    case BODY = 'body';
+    case HEADERS = 'headers';
 
-    /**
-     * @return string[]
-     */
-    public static function getValues(): array
+    public static function values(): array
     {
-        return array_values(self::toArray());
+        return array_column(self::cases(), 'value');
     }
 
     public function isMethod(): bool
     {
-        return $this->getValue() === self::METHOD;
+        return $this === self::METHOD;
     }
 
     public function isUrl(): bool
     {
-        return $this->getValue() === self::URL;
+        return $this === self::URL;
     }
 
     public function isQuery(): bool
     {
-        return $this->getValue() === self::QUERY;
+        return $this === self::QUERY;
     }
 
     public function isBody(): bool
     {
-        return $this->getValue() === self::BODY;
+        return $this === self::BODY;
     }
 
     public function isHeaders(): bool
     {
-        return $this->getValue() === self::HEADERS;
+        return $this === self::HEADERS;
     }
 }

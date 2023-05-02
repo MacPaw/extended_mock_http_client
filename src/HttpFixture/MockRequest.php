@@ -28,11 +28,11 @@ class MockRequest
     public function isSuitable(string $method, string $url, string $query, string $body, array $headers): bool
     {
         foreach ($this->fixtureItems as $key => $items) {
-            if (!RequestKey::isValid($key)) {
-                throw new InvalidFixtureItemKeyException(RequestKey::getValues(), $key);
+            if (RequestKey::tryFrom($key) === null) {
+                throw new InvalidFixtureItemKeyException(RequestKey::values(), $key);
             }
 
-            $requestKey = new RequestKey($key);
+            $requestKey = RequestKey::tryFrom($key);
 
             if ($requestKey->isMethod()) {
                 $value = $method;
