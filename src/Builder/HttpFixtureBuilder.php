@@ -60,8 +60,8 @@ class HttpFixtureBuilder
     {
         foreach ($arguments as $argument) {
             foreach ($argument as $key => $item) {
-                if (!RequestKey::isValid($key)) {
-                    throw new InvalidRequestKeyException(RequestKey::getValues(), $key);
+                if (RequestKey::tryFrom($key) === null) {
+                    throw new InvalidRequestKeyException(RequestKey::values(), $key);
                 }
 
                 $this->httpFixtureRequestItems['request'] = array_merge(
