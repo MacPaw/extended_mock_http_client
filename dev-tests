@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-PHP_VERSION="8.1"
-SYMFONY_VERSION="6.0"
+PHP_VERSION="8.2"
+SYMFONY_VERSION="7.0"
 
 printHelp() {
   echo "Run tests"
@@ -12,8 +12,9 @@ printHelp() {
   echo "  --symfony               Specific Symfony version"
   echo " "
   echo "Example:"
-  echo "  ./dev-tests --php=7.2 --symfony=4.4"
-  echo "  ./dev-tests --php=7.2 --symfony=5.0"
+  echo "  ./dev-tests --php 8.1 --symfony 4.4"
+  echo "  ./dev-tests --php 8.2 --symfony 5.0"
+  echo "  ./dev-tests --php 8.2 --symfony 7.0"
 
   exit 0
 }

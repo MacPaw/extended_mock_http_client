@@ -6,7 +6,6 @@ namespace ExtendedMockHttpClient\Tests\Functional\Factory;
 
 use ExtendedMockHttpClient\Excpetion\Factory\HttpFixtureFactory\NotFoundKeyInAllowedNestedKeysException;
 use ExtendedMockHttpClient\Excpetion\Factory\HttpFixtureFactory\RequiredKeyNotFoundException;
-use ExtendedMockHttpClient\Factory\HttpFixtureFactory;
 use ExtendedMockHttpClient\HttpFixture\Request\Comparator\AndComparator;
 use ExtendedMockHttpClient\HttpFixture\Request\Comparator\ArrayCountComparator;
 use ExtendedMockHttpClient\HttpFixture\Request\Comparator\InArrayComparator;
@@ -23,9 +22,7 @@ class HttpFixtureFactoryTest extends AbstractFunctionalTestCase
      */
     public function testSuccess(array $array): void
     {
-        $factory = self::getContainer()->get(HttpFixtureFactory::class);
-
-        $factory->createFromArray($array);
+        $this->httpFixtureFactory->createFromArray($array);
 
         $this->expectNotToPerformAssertions();
     }
@@ -132,10 +129,8 @@ class HttpFixtureFactoryTest extends AbstractFunctionalTestCase
      */
     public function testRequiredKeyNotFoundException(array $array): void
     {
-        $factory = self::getContainer()->get(HttpFixtureFactory::class);
-
         $this->expectException(RequiredKeyNotFoundException::class);
-        $factory->createFromArray($array);
+        $this->httpFixtureFactory->createFromArray($array);
     }
 
     public function requiredKeyNotFoundExceptionDataProvider(): array
@@ -159,10 +154,8 @@ class HttpFixtureFactoryTest extends AbstractFunctionalTestCase
      */
     public function testNotFoundKeyInAllowedNestedKeysException(array $array): void
     {
-        $factory = self::getContainer()->get(HttpFixtureFactory::class);
-
         $this->expectException(NotFoundKeyInAllowedNestedKeysException::class);
-        $factory->createFromArray($array);
+        $this->httpFixtureFactory->createFromArray($array);
     }
 
     public function notFoundKeyInAllowedNestedKeysExceptionDataProvider(): array

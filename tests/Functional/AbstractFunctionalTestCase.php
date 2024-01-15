@@ -9,13 +9,20 @@ use ExtendedMockHttpClient\Factory\HttpFixtureFactory;
 
 abstract class AbstractFunctionalTestCase extends AbstractKernelTestCase
 {
+    /**
+     * @var HttpFixtureFactory
+     */
+    protected $httpFixtureFactory;
+
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->httpFixtureFactory = self::getContainerService(HttpFixtureFactory::class);
     }
 
     public function createHttpClient(string $baseUri): ExtendedMockHttpClient
     {
-        return new ExtendedMockHttpClient($baseUri, self::getContainer()->get(HttpFixtureFactory::class));
+        return new ExtendedMockHttpClient($baseUri, $this->httpFixtureFactory);
     }
 }

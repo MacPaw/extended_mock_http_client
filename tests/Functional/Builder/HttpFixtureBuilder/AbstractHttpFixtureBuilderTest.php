@@ -19,7 +19,7 @@ abstract class AbstractHttpFixtureBuilderTest extends AbstractFunctionalTestCase
     {
         parent::setUp();
 
-        $this->extendedMockHttpClient = self::getContainer()->get(ExtendedMockHttpClient::class);
+        $this->extendedMockHttpClient = self::getContainerService(ExtendedMockHttpClient::class);
     }
 
     protected function getHttpFixtureBuilder(): HttpFixtureBuilder

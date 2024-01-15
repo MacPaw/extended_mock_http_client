@@ -21,7 +21,7 @@ class ReadmeExamplesTest extends AbstractFunctionalTestCase
     {
         parent::setUp();
 
-        $this->client = self::getContainer()->get(ExtendedMockHttpClient::class);
+        $this->client = self::getContainerService(ExtendedMockHttpClient::class);
     }
 
     /**

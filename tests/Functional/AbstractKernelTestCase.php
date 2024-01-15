@@ -6,7 +6,6 @@ namespace ExtendedMockHttpClient\Tests\Functional;
 
 use ExtendedMockHttpClient\Tests\Fixture\Application\Kernel;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 abstract class AbstractKernelTestCase extends KernelTestCase
 {
@@ -15,12 +14,12 @@ abstract class AbstractKernelTestCase extends KernelTestCase
         return Kernel::class;
     }
 
-    protected static function getContainer(): ContainerInterface
+    protected static function getContainerService(string $serviceClassOrId): ?object
     {
         if (!static::$booted) {
             static::bootKernel();
         }
 
-        return self::$kernel->getContainer();
+        return self::$kernel->getContainer()->get($serviceClassOrId);
     }
 }
